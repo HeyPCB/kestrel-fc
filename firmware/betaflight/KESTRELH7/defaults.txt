@@ -1,0 +1,37 @@
+# Kestrel H7 + Kestrel 4in1 + Kestrel GPS: Betaflight 4.5 CLI defaults.
+# Paste into the CLI after flashing KESTRELH7, then "save". Not yet flown: every line is derived from the
+# boards' wiring, none is a tune.
+
+# ports (serial <id> <function mask> ...; UART1 = 0 ... UART7 = 6)
+serial 1 2 115200 57600 0 115200          # UART2: GPS (Kestrel GPS, MAX-M10S)
+serial 2 131073 115200 57600 0 115200     # UART3: MSP + VTX (MSP) for the digital VTX's OSD
+serial 3 1024 115200 57600 0 115200       # UART4: ESC sensor (the 4-in-1's TLM wire, RX only)
+serial 6 64 115200 57600 0 115200         # UART7: serial RX (ELRS, CRSF)
+
+feature GPS
+feature ESC_SENSOR
+feature TELEMETRY
+
+set serialrx_provider = CRSF
+set osd_displayport_device = MSP
+set displayport_msp_serial = 2
+
+# motors: AM32 on the Kestrel 4in1 takes bidirectional DShot
+set motor_pwm_protocol = DSHOT600
+set dshot_bidir = ON
+set motor_poles = 14
+
+# sensors on the boards
+set gps_provider = UBLOX
+set gps_ublox_use_galileo = ON
+set mag_hardware = AUTO
+set baro_hardware = MS5611
+set blackbox_device = SPIFLASH
+
+# power (also the target's defaults): 10k / 1k divider, INA180A2 over 0.25 mOhm = 12.5 mV/A
+set vbat_scale = 110
+set ibata_scale = 125
+set ibata_offset = 0
+
+# PINIO1 (PE2) on USER1: switch on = 10 V VTX rail off (the board's AO3400A pulls the BEC's EN low)
+set pinio_box = 40,255,255,255

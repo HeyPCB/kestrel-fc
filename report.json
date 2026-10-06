@@ -1,0 +1,805 @@
+{
+  "parts": {
+    "bound": 93,
+    "unsourced": 0,
+    "conflicts": 0,
+    "refs_by_status": {
+      "bound": [
+        "U1",
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "C7",
+        "C8",
+        "C9",
+        "C10",
+        "C11",
+        "Y1",
+        "C12",
+        "C13",
+        "R1",
+        "SW1",
+        "U2",
+        "C14",
+        "C15",
+        "C16",
+        "R2",
+        "U3",
+        "C17",
+        "C18",
+        "R3",
+        "R4",
+        "U4",
+        "C19",
+        "R5",
+        "R6",
+        "U5",
+        "C20",
+        "R7",
+        "R8",
+        "R9",
+        "D1",
+        "C21",
+        "R10",
+        "R11",
+        "C22",
+        "R12",
+        "C23",
+        "U6",
+        "C24",
+        "C25",
+        "C26",
+        "L1",
+        "R13",
+        "R14",
+        "C27",
+        "C28",
+        "R15",
+        "U7",
+        "C29",
+        "C30",
+        "C31",
+        "L2",
+        "R16",
+        "R17",
+        "C32",
+        "C33",
+        "C34",
+        "R18",
+        "Q1",
+        "R19",
+        "U8",
+        "C35",
+        "C36",
+        "R20",
+        "U9",
+        "C37",
+        "C38",
+        "R21",
+        "J1",
+        "J2",
+        "J3",
+        "J4",
+        "J5",
+        "R22",
+        "R23",
+        "C39",
+        "U10",
+        "D2",
+        "Q2",
+        "R24",
+        "D3",
+        "R25",
+        "D4",
+        "R26",
+        "D5",
+        "R27",
+        "R28"
+      ],
+      "unsourced": [],
+      "conflict": []
+    },
+    "not_in_bom": [
+      "H1",
+      "H2",
+      "H3",
+      "H4"
+    ],
+    "extended_distinct": [
+      "C114409",
+      "C12624",
+      "C14656",
+      "C15639",
+      "C160404",
+      "C160405",
+      "C160407",
+      "C194919",
+      "C22793",
+      "C23088",
+      "C231329",
+      "C2894897",
+      "C36411",
+      "C400090",
+      "C51118",
+      "C5219261",
+      "C7519",
+      "C84266",
+      "C908776",
+      "C97633"
+    ],
+    "extended_fee_usd": 60.0,
+    "findings": [
+      {
+        "code": "jlcpcb_extended_parts",
+        "severity": "info",
+        "detail": "20 distinct Extended parts, about $60 in JLC loading fees",
+        "fix": "swap an Extended part for a Basic one where the table lists one"
+      }
+    ],
+    "table": "lcsc_pinned.json",
+    "table_source": "HeyPCB runner/cache/jlcparts/cache.sqlite3, table jlc_components, queried 2026-09-26. Each row's `snapshot` is that row's fetched_at."
+  },
+  "compose": {
+    "components": 114,
+    "nets": 84,
+    "noConnects": [
+      "J5.A8",
+      "J5.B8",
+      "U1.4",
+      "U1.5",
+      "U1.7",
+      "U1.8",
+      "U1.17",
+      "U1.18",
+      "U1.28",
+      "U1.31",
+      "U1.32",
+      "U1.33",
+      "U1.46",
+      "U1.47",
+      "U1.51",
+      "U1.52",
+      "U1.53",
+      "U1.54",
+      "U1.57",
+      "U1.58",
+      "U1.61",
+      "U1.65",
+      "U1.66",
+      "U1.81",
+      "U1.82",
+      "U1.83",
+      "U1.84",
+      "U1.85",
+      "U1.89",
+      "U1.90",
+      "U1.91",
+      "U1.96",
+      "U1.97",
+      "U1.98",
+      "U2.7",
+      "U3.1",
+      "U3.13",
+      "U4.6",
+      "U8.4",
+      "U9.4"
+    ],
+    "ran": true,
+    "seconds": 3.4
+  },
+  "schematic": {
+    "paper": "A1",
+    "file": "kestrel_fc.kicad_sch",
+    "ran": true,
+    "seconds": 12.0
+  },
+  "erc": {
+    "ran": true,
+    "errors": 0,
+    "warnings": 0,
+    "types": [],
+    "seconds": 0.8
+  },
+  "netlist": {
+    "ok": true,
+    "missing": [],
+    "extra": [],
+    "differ": [],
+    "nets": 84,
+    "ran": true,
+    "seconds": 0.2
+  },
+  "board": {
+    "footprints": 114,
+    "outline_mm": [
+      40.0,
+      40.0
+    ],
+    "stackup": {
+      "copper": 6,
+      "layers": [
+        "F.Cu",
+        "In1.Cu",
+        "In2.Cu",
+        "In3.Cu",
+        "In4.Cu",
+        "B.Cu"
+      ],
+      "planes": {
+        "In1.Cu": "GND",
+        "In3.Cu": "5V"
+      },
+      "plane_layers": [
+        "In1.Cu",
+        "In3.Cu"
+      ],
+      "signal_layers": [
+        "F.Cu",
+        "In2.Cu",
+        "In4.Cu",
+        "B.Cu"
+      ],
+      "dfm_profile": "jlcpcb_6layer"
+    },
+    "art": {
+      "items": 0,
+      "shapes": 0,
+      "keepouts": 0,
+      "qr": 0,
+      "by_layer": {}
+    },
+    "finish": null,
+    "ran": true,
+    "seconds": 1.3
+  },
+  "place": {
+    "parts": 114,
+    "log": [
+      "H1 -> (4.75, 4.75) rot 0 : rung 0 lock: 30.5 mm stack hole; its courtyard is the grommet's keep-out",
+      "H2 -> (4.75, 35.25) rot 0 : rung 0 lock: 30.5 mm stack hole; its courtyard is the grommet's keep-out",
+      "H3 -> (35.25, 4.75) rot 0 : rung 0 lock: 30.5 mm stack hole; its courtyard is the grommet's keep-out",
+      "H4 -> (35.25, 35.25) rot 0 : rung 0 lock: 30.5 mm stack hole; its courtyard is the grommet's keep-out",
+      "U1 -> (20.00, 20.00) rot 0 : rung 0 lock: MCU in the middle; its four pin sides face their ports",
+      "J4 -> (20.00, 3.40) rot 180 : rung 0 lock: GPS port on the top edge, beside PD5/PD6 and PB6/PB7",
+      "J5 -> (36.40, 14.80) rot 90 : rung 0 lock: USB-C on the right edge, beside PA11/PA12",
+      "J3 -> (3.40, 24.00) rot 270 : rung 0 lock: receiver port on the left edge (UART7)",
+      "J1 -> (20.00, 36.60) rot 0 : rung 0 lock: ESC port in the middle of the bottom edge, motors 1-2 above it",
+      "J2 -> (36.60, 25.60) rot 90 : rung 0 lock: VTX port on the right edge under the USB, beside PD8/PD9",
+      "Y1 -> (9.40, 17.60) rot 90 : rung 0 lock: 8 MHz crystal at PH0/PH1",
+      "SW1 -> (9.60, 11.00) rot 0 : rung 0 lock: BOOT button",
+      "U10 -> (29.50, 14.80) rot 90 : rung 0 lock: USB ESD behind the receptacle",
+      "U2 -> (18.40, 21.00) rot 0 : rung 0 lock: gyro 1 under the MCU, at the board's centre",
+      "U3 -> (25.40, 19.80) rot 90 : rung 0 lock: gyro 2 beside it, turned so its signal pads face the centre; CS_GYR (pin 5) alone faces right, where the board is open for its via",
+      "C15 -> (15.65, 22.25) rot 90 : rung 0 lock: ICM-20602 capacitor, clear of its pin-1 mark",
+      "C17 -> (30.20, 18.50) rot 90 : rung 0 lock: BMI088 VDD capacitor, clear of the pad row's escape vias",
+      "C18 -> (30.20, 20.70) rot 90 : rung 0 lock: BMI088 VDD capacitor, clear of the pad row's escape vias",
+      "U9 -> (20.00, 15.00) rot 0 : rung 0 lock: the gyros' own LDO",
+      "U8 -> (25.00, 15.00) rot 0 : rung 0 lock: MCU LDO",
+      "U6 -> (9.00, 13.00) rot 0 : rung 0 lock: 5 V BEC",
+      "L1 -> (9.00, 19.00) rot 0 : rung 0 lock: 5 V inductor",
+      "U7 -> (9.00, 26.00) rot 0 : rung 0 lock: 10 V BEC",
+      "L2 -> (14.00, 30.50) rot 0 : rung 0 lock: 10 V inductor",
+      "D1 -> (22.50, 33.50) rot 0 : rung 0 lock: TVS by the ESC port",
+      "U5 -> (26.20, 9.00) rot 0 : rung 0 lock: blackbox flash under SPI3, clear of the USB-C shell tabs",
+      "U4 -> (14.00, 7.80) rot 90 : rung 0 lock: baro under the GPS side: cover it with foam",
+      "D2 -> (30.20, 23.20) rot 0 : rung 0 lock: VBUS diode, below the USB-C shell tabs",
+      "Q1 -> (13.40, 25.00) rot 90 : rung 0 lock: VTX power switch beside the 10 V BEC's EN",
+      "Q2 -> (18.70, 6.00) rot 0 : rung 0 lock: buzzer driver under the BZ pads",
+      "D3 -> (5.20, 13.00) rot 0 : rung 0 lock: status LED 0, left edge",
+      "D4 -> (5.20, 15.40) rot 0 : rung 0 lock: status LED 1",
+      "D5 -> (5.20, 17.80) rot 0 : rung 0 lock: power LED",
+      "TP4 -> (2.60, 10.60) rot 0 : rung 0 lock: pad M5 on the left edge",
+      "TP5 -> (2.60, 13.25) rot 0 : rung 0 lock: pad M6 on the left edge",
+      "TP6 -> (2.60, 15.90) rot 0 : rung 0 lock: pad M7 on the left edge",
+      "TP7 -> (2.60, 18.55) rot 0 : rung 0 lock: pad M8 on the left edge",
+      "TP8 -> (2.60, 21.20) rot 0 : rung 0 lock: pad T1 on the left edge",
+      "TP9 -> (2.60, 23.85) rot 0 : rung 0 lock: pad R1 on the left edge",
+      "TP10 -> (2.60, 26.50) rot 0 : rung 0 lock: pad T6 on the left edge",
+      "TP11 -> (2.60, 29.15) rot 0 : rung 0 lock: pad R6 on the left edge",
+      "TP12 -> (12.95, 2.60) rot 0 : rung 0 lock: pad LED on the top edge",
+      "TP13 -> (15.77, 2.60) rot 0 : rung 0 lock: pad BZ- on the top edge",
+      "TP14 -> (18.59, 2.60) rot 0 : rung 0 lock: pad BZ+ on the top edge",
+      "TP15 -> (21.41, 2.60) rot 0 : rung 0 lock: pad 5V on the top edge",
+      "TP16 -> (24.23, 2.60) rot 0 : rung 0 lock: pad 10V on the top edge",
+      "TP17 -> (27.05, 2.60) rot 0 : rung 0 lock: pad GND on the top edge",
+      "TP1 -> (25.00, 38.40) rot 0 : rung 0 lock: SWD pad SWDIO",
+      "TP2 -> (27.00, 38.40) rot 0 : rung 0 lock: SWD pad SWCLK",
+      "TP3 -> (29.00, 38.40) rot 0 : rung 0 lock: SWD pad NRST",
+      "C1 -> (10.08, 14.75) rot 0 : rung 0 lock: satellite of mcu:U?, placed by the kit",
+      "C2 -> (10.08, 13.50) rot 0 : rung 0 lock: satellite of mcu:U?, placed by the kit",
+      "C3 -> (8.33, 14.25) rot 90 : rung 0 lock: satellite of mcu:U?, placed by the kit",
+      "C4 -> (10.08, 20.50) rot 0 : rung 0 lock: satellite of mcu:U?, placed by the kit",
+      "C5 -> (10.08, 21.75) rot 0 : rung 0 lock: satellite of mcu:U?, placed by the kit",
+      "C6 -> (13.83, 10.25) rot 0 : rung 0 lock: satellite of mcu:U?, placed by the kit",
+      "C7 -> (25.00, 29.43) rot 0 : rung 0 lock: satellite of mcu:U?, placed by the kit",
+      "C8 -> (29.43, 15.00) rot 90 : rung 0 lock: satellite of mcu:U?, placed by the kit",
+      "C9 -> (7.83, 20.50) rot 0 : rung 0 lock: satellite of mcu:U?, placed by the kit",
+      "C10 -> (6.33, 19.25) rot 0 : rung 0 lock: satellite of mcu:U?, placed by the kit",
+      "C11 -> (10.08, 23.00) rot 0 : rung 0 lock: satellite of mcu:U?, placed by the kit",
+      "C12 -> (8.08, 22.75) rot 90 : rung 0 lock: satellite of mcu:U?, placed by the kit",
+      "C13 -> (10.33, 25.25) rot 90 : rung 0 lock: satellite of mcu:U?, placed by the kit",
+      "R1 -> (17.00, 10.58) rot 0 : rung 0 lock: satellite of mcu:U?, placed by the kit",
+      "C14 -> (17.90, 23.47) rot 0 : rung 0 lock: satellite of imu1:U?, placed by the kit",
+      "C16 -> (20.15, 23.47) rot 0 : rung 0 lock: satellite of imu1:U?, placed by the kit",
+      "R2 -> (15.92, 20.00) rot 90 : rung 0 lock: satellite of imu1:U?, placed by the kit",
+      "R3 -> (22.89, 21.30) rot 90 : rung 0 lock: satellite of imu2:U?, placed by the kit",
+      "R4 -> (21.64, 20.79) rot 90 : rung 0 lock: satellite of imu2:U?, placed by the kit",
+      "C19 -> (15.88, 10.38) rot 0 : rung 0 lock: satellite of baro:U?, placed by the kit",
+      "R5 -> (14.62, 5.22) rot 0 : rung 0 lock: satellite of baro:U?, placed by the kit",
+      "R6 -> (17.88, 8.47) rot 0 : rung 0 lock: satellite of baro:U?, placed by the kit",
+      "C20 -> (29.79, 5.41) rot 0 : rung 0 lock: satellite of flash:U?, placed by the kit",
+      "R7 -> (20.86, 10.91) rot 90 : rung 0 lock: satellite of flash:U?, placed by the kit",
+      "R8 -> (20.36, 8.36) rot 0 : rung 0 lock: satellite of flash:U?, placed by the kit",
+      "R9 -> (26.54, 12.64) rot 0 : rung 0 lock: satellite of flash:U?, placed by the kit",
+      "C21 -> (20.50, 30.50) rot 0 : rung 0 lock: satellite of vbat:D?, placed by the kit",
+      "R10 -> (18.25, 33.50) rot 90 : rung 0 lock: satellite of vbat:D?, placed by the kit",
+      "R11 -> (18.00, 31.24) rot 90 : rung 0 lock: satellite of vbat:D?, placed by the kit",
+      "C22 -> (17.00, 34.49) rot 90 : rung 0 lock: satellite of vbat:D?, placed by the kit",
+      "R12 -> (22.50, 36.00) rot 0 : rung 0 lock: satellite of vbat:D?, placed by the kit",
+      "C23 -> (22.76, 37.25) rot 0 : rung 0 lock: satellite of vbat:D?, placed by the kit",
+      "C24 -> (5.61, 12.05) rot 90 : rung 0 lock: satellite of bec5:U?, placed by the kit",
+      "C25 -> (7.86, 10.55) rot 0 : rung 0 lock: satellite of bec5:U?, placed by the kit",
+      "C26 -> (10.14, 15.45) rot 0 : rung 0 lock: satellite of bec5:U?, placed by the kit",
+      "R13 -> (12.14, 12.05) rot 90 : rung 0 lock: satellite of bec5:U?, placed by the kit",
+      "R14 -> (10.14, 9.55) rot 90 : rung 0 lock: satellite of bec5:U?, placed by the kit",
+      "C27 -> (13.10, 19.00) rot 90 : rung 0 lock: satellite of bec5:U?, placed by the kit",
+      "C28 -> (9.60, 23.00) rot 0 : rung 0 lock: satellite of bec5:U?, placed by the kit",
+      "R15 -> (12.89, 14.50) rot 0 : rung 0 lock: satellite of bec5:U?, placed by the kit",
+      "C29 -> (5.61, 25.05) rot 90 : rung 0 lock: satellite of bec10:U?, placed by the kit",
+      "C30 -> (6.61, 22.55) rot 0 : rung 0 lock: satellite of bec10:U?, placed by the kit",
+      "C31 -> (9.89, 28.45) rot 0 : rung 0 lock: satellite of bec10:U?, placed by the kit",
+      "R16 -> (7.14, 28.80) rot 0 : rung 0 lock: satellite of bec10:U?, placed by the kit",
+      "R17 -> (10.14, 30.80) rot 90 : rung 0 lock: satellite of bec10:U?, placed by the kit",
+      "C32 -> (18.10, 27.50) rot 90 : rung 0 lock: satellite of bec10:U?, placed by the kit",
+      "C33 -> (14.60, 34.50) rot 0 : rung 0 lock: satellite of bec10:U?, placed by the kit",
+      "C34 -> (20.35, 27.50) rot 90 : rung 0 lock: satellite of bec10:U?, placed by the kit",
+      "R18 -> (16.14, 26.00) rot 90 : rung 0 lock: satellite of bec10:U?, placed by the kit",
+      "R19 -> (22.35, 25.94) rot 90 : rung 0 lock: satellite of vtxsw:Q?, placed by the kit",
+      "C35 -> (22.36, 17.45) rot 0 : rung 0 lock: satellite of ldo:U?, placed by the kit",
+      "C36 -> (28.14, 17.95) rot 90 : rung 0 lock: satellite of ldo:U?, placed by the kit",
+      "R20 -> (20.36, 12.55) rot 0 : rung 0 lock: satellite of ldo:U?, placed by the kit",
+      "C37 -> (18.86, 17.45) rot 0 : rung 0 lock: satellite of ldog:U?, placed by the kit",
+      "C38 -> (20.64, 17.95) rot 90 : rung 0 lock: satellite of ldog:U?, placed by the kit",
+      "R21 -> (18.11, 12.55) rot 0 : rung 0 lock: satellite of ldog:U?, placed by the kit",
+      "R22 -> (30.66, 16.05) rot 90 : rung 0 lock: satellite of usb:J?, placed by the kit",
+      "R23 -> (30.66, 13.05) rot 90 : rung 0 lock: satellite of usb:J?, placed by the kit",
+      "C39 -> (30.16, 18.95) rot 90 : rung 0 lock: satellite of usb:J?, placed by the kit",
+      "R24 -> (18.51, 9.95) rot 0 : rung 0 lock: satellite of buz:Q?, placed by the kit",
+      "R25 -> (5.49, 11.25) rot 0 : rung 0 lock: satellite of led0:D?, placed by the kit",
+      "R26 -> (2.74, 15.40) rot 90 : rung 0 lock: satellite of led1:D?, placed by the kit",
+      "R27 -> (1.99, 17.80) rot 0 : rung 0 lock: satellite of ledp:D?, placed by the kit",
+      "R28 -> (10.95, 2.60) rot 90 : rung 0 lock: satellite of pads:TP1?, placed by the kit"
+    ],
+    "ran": true,
+    "seconds": 2.4
+  },
+  "route": {
+    "before": 277,
+    "after": 0,
+    "open_by_net": {},
+    "fixes": [],
+    "passes": [
+      [
+        1,
+        31
+      ],
+      [
+        2,
+        15
+      ],
+      [
+        3,
+        13
+      ],
+      [
+        4,
+        6
+      ],
+      [
+        5,
+        6
+      ],
+      [
+        6,
+        3
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        8,
+        1
+      ],
+      [
+        9,
+        0
+      ],
+      [
+        10,
+        0
+      ]
+    ],
+    "stats": {
+      "tracks": 1258,
+      "vias": 125,
+      "length_mm": 1855.3,
+      "length_by_layer_mm": {
+        "B.Cu": 507.0,
+        "F.Cu": 541.5,
+        "In2.Cu": 351.4,
+        "In4.Cu": 455.4
+      }
+    },
+    "layers": [
+      [
+        "F.Cu",
+        "signal"
+      ],
+      [
+        "In1.Cu",
+        "power"
+      ],
+      [
+        "In2.Cu",
+        "signal"
+      ],
+      [
+        "In3.Cu",
+        "power"
+      ],
+      [
+        "In4.Cu",
+        "signal"
+      ],
+      [
+        "B.Cu",
+        "signal"
+      ]
+    ],
+    "ladder": [
+      {
+        "rung": 1,
+        "tag": "1_fanout",
+        "classes": {},
+        "fanout": true,
+        "export": {
+          "poursWithheld": 0,
+          "keepoutsMirrored": 1,
+          "clearanceBumpedTo_mm": null,
+          "powerLayers": [
+            "In1.Cu",
+            "In3.Cu"
+          ],
+          "rewritten": [],
+          "pinShapesOnPlanesDropped": 4,
+          "planes": 0,
+          "canonical": {
+            "images": 41,
+            "renamed": 14,
+            "nets": 124
+          },
+          "viaViaClearance_mm": 0.25
+        },
+        "seconds": 35.8,
+        "ok": true,
+        "log": {
+          "nets": {},
+          "timedOut": false,
+          "noProgress": false,
+          "last_unrouted": 0,
+          "read": true
+        },
+        "widths": {
+          "snapped": 0,
+          "widened": 16,
+          "kept_narrow": 4,
+          "raised_to_min": 50,
+          "below_min_deleted": 0
+        },
+        "shorts_deleted": 0,
+        "keepout_deleted": 0,
+        "drc": {
+          "ran": true,
+          "electrical": 0,
+          "unconnected": 0,
+          "score": 0,
+          "types": {},
+          "shorts": 0,
+          "keepout": 0
+        },
+        "open": 0,
+        "open_by_net": {},
+        "stats": {
+          "tracks": 1258,
+          "vias": 125,
+          "length_mm": 1855.2,
+          "length_by_layer_mm": {
+            "B.Cu": 506.8,
+            "F.Cu": 541.6,
+            "In2.Cu": 351.4,
+            "In4.Cu": 455.4
+          }
+        }
+      },
+      {
+        "rung": 1,
+        "tag": "1_nofanout",
+        "classes": {},
+        "fanout": false,
+        "export": {
+          "poursWithheld": 0,
+          "keepoutsMirrored": 1,
+          "clearanceBumpedTo_mm": null,
+          "powerLayers": [
+            "In1.Cu",
+            "In3.Cu"
+          ],
+          "rewritten": [],
+          "pinShapesOnPlanesDropped": 4,
+          "planes": 0,
+          "canonical": {
+            "images": 41,
+            "renamed": 14,
+            "nets": 124
+          },
+          "viaViaClearance_mm": 0.25
+        },
+        "seconds": 38.3,
+        "ok": true,
+        "log": {
+          "nets": {},
+          "timedOut": false,
+          "noProgress": false,
+          "last_unrouted": 1,
+          "read": true
+        },
+        "widths": {
+          "snapped": 0,
+          "widened": 0,
+          "kept_narrow": 0,
+          "raised_to_min": 0,
+          "below_min_deleted": 0
+        },
+        "shorts_deleted": 0,
+        "keepout_deleted": 0,
+        "drc": {
+          "ran": true,
+          "electrical": 0,
+          "unconnected": 0,
+          "score": 0,
+          "types": {},
+          "shorts": 0,
+          "keepout": 0
+        },
+        "open": 0,
+        "open_by_net": {},
+        "stats": {
+          "tracks": 1199,
+          "vias": 139,
+          "length_mm": 1777.4,
+          "length_by_layer_mm": {
+            "B.Cu": 518.4,
+            "F.Cu": 551.4,
+            "In2.Cu": 398.0,
+            "In4.Cu": 309.6
+          }
+        }
+      }
+    ],
+    "kept_rung": "1_fanout",
+    "classes_routed": {},
+    "fanout_kept": true,
+    "fanout_compare": {
+      "1_fanout": {
+        "open": 0,
+        "score": 0,
+        "vias": 125,
+        "seconds": 35.8
+      },
+      "1_nofanout": {
+        "open": 0,
+        "score": 0,
+        "vias": 139,
+        "seconds": 38.3
+      }
+    },
+    "pad_vias": [],
+    "timedOut": false,
+    "noProgress": false,
+    "via_nudge": {
+      "pairs": 3,
+      "moved": 3,
+      "left": 0
+    },
+    "ran": true,
+    "seconds": 81.7
+  },
+  "pour": {
+    "plan": [
+      {
+        "layer": "F.Cu",
+        "net": "GND",
+        "priority": 0
+      },
+      {
+        "layer": "B.Cu",
+        "net": "GND",
+        "priority": 0
+      },
+      {
+        "layer": "In1.Cu",
+        "net": "GND",
+        "priority": 0
+      },
+      {
+        "layer": "In3.Cu",
+        "net": "5V",
+        "priority": 1
+      },
+      {
+        "layer": "In2.Cu",
+        "net": "3V3",
+        "priority": 1
+      },
+      {
+        "layer": "In4.Cu",
+        "net": "GND",
+        "priority": 0
+      }
+    ],
+    "open_before": 0,
+    "open_after_pour": 0,
+    "stitch_vias": 8,
+    "gnd_pour_layers": [
+      "F.Cu",
+      "B.Cu",
+      "In1.Cu",
+      "In4.Cu"
+    ],
+    "stitched": true,
+    "open_after_stitch": 0,
+    "island_repair_vias": 0,
+    "open_final": 0,
+    "zones": [],
+    "stats": {
+      "tracks": 1258,
+      "vias": 133,
+      "length_mm": 1855.3,
+      "length_by_layer_mm": {
+        "B.Cu": 507.0,
+        "F.Cu": 541.5,
+        "In2.Cu": 351.4,
+        "In4.Cu": 455.4
+      }
+    },
+    "ran": true,
+    "seconds": 1.1
+  },
+  "silk": {
+    "silk_clipped": 0,
+    "art_obstacles": 0,
+    "pin_labels": 0,
+    "silk_refused": [],
+    "words": 9,
+    "refs_seated": 23,
+    "refs_hidden": 82,
+    "title_offset_mm": null,
+    "title_lines": 2,
+    "stitch_vias_displaced": 3,
+    "ran": true,
+    "seconds": 0.6
+  },
+  "drc": {
+    "ran": true,
+    "state": "fresh",
+    "board_sha": "215af754cbc9a129a7df5d12f376ba7c7f4f2323d55df6f8c9c4d5fef10136bb",
+    "errors": 0,
+    "warnings": 0,
+    "unconnected": 0,
+    "parity": 0,
+    "error_types": {},
+    "warning_types": {},
+    "repairs": [],
+    "seconds": 1.2
+  },
+  "dfm": {
+    "ran": true,
+    "profile": "jlcpcb_6layer",
+    "copper_layers": 6,
+    "errors": 0,
+    "warnings": 1,
+    "rows": [
+      {
+        "rule": "footprint_silk_width",
+        "severity": "warning",
+        "count": 359,
+        "min_mm": 0.12,
+        "note": "stock footprint silk down to 0.12 mm; the fab prints it at its 0.15 mm minimum"
+      }
+    ],
+    "qr": [],
+    "finish": null
+  },
+  "fab": {
+    "gerbers": [
+      "kestrel_fc-B_Cu.gbl",
+      "kestrel_fc-B_Mask.gbs",
+      "kestrel_fc-B_Paste.gbp",
+      "kestrel_fc-B_Silkscreen.gbo",
+      "kestrel_fc-Edge_Cuts.gm1",
+      "kestrel_fc-F_Cu.gtl",
+      "kestrel_fc-F_Mask.gts",
+      "kestrel_fc-F_Paste.gtp",
+      "kestrel_fc-F_Silkscreen.gto",
+      "kestrel_fc-In1_Cu.g1",
+      "kestrel_fc-In2_Cu.g2",
+      "kestrel_fc-In3_Cu.g3",
+      "kestrel_fc-In4_Cu.g4",
+      "kestrel_fc-job.gbrjob"
+    ],
+    "copper_layers": 6,
+    "copper_gerbers": [
+      "kestrel_fc-F_Cu.gtl",
+      "kestrel_fc-In1_Cu.g1",
+      "kestrel_fc-In2_Cu.g2",
+      "kestrel_fc-In3_Cu.g3",
+      "kestrel_fc-In4_Cu.g4",
+      "kestrel_fc-B_Cu.gbl"
+    ],
+    "gerber_job": {
+      "file": "kestrel_fc-job.gbrjob",
+      "layer_number": 6,
+      "board_thickness_mm": 1.6,
+      "copper_files": [
+        "kestrel_fc-F_Cu.gtl",
+        "kestrel_fc-In1_Cu.g1",
+        "kestrel_fc-In2_Cu.g2",
+        "kestrel_fc-In3_Cu.g3",
+        "kestrel_fc-In4_Cu.g4",
+        "kestrel_fc-B_Cu.gbl"
+      ],
+      "copper_mm": [
+        0.035,
+        0.035,
+        0.035,
+        0.035,
+        0.035,
+        0.035
+      ],
+      "dielectric_mm": [
+        0.274,
+        0.274,
+        0.274,
+        0.274,
+        0.274
+      ],
+      "dielectric": [
+        "FR4",
+        "FR4",
+        "FR4",
+        "FR4",
+        "FR4"
+      ]
+    },
+    "drill": [
+      "kestrel_fc.drl",
+      "kestrel_fc-drl_map.gbr"
+    ],
+    "zip": "kestrel_fc_gerbers.zip",
+    "pos": "kestrel_fc_pos.csv",
+    "cpl": "kestrel_fc_cpl_jlc.csv",
+    "cpl_rotations_corrected": 38,
+    "bom": "kestrel_fc_bom.csv",
+    "schematic_pdf": "kestrel_fc_schematic.pdf",
+    "step": "kestrel_fc.step",
+    "ready": true,
+    "blockers": [],
+    "drc_state": "fresh",
+    "ran": true,
+    "seconds": 2.5
+  }
+}

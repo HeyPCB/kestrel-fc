@@ -1,0 +1,1559 @@
+{
+ "name": "kestrel_fc",
+ "title": "Kestrel H7 - FPV flight controller: STM32H743, dual IMU, baro, 16 MB blackbox, 5 V + 10 V BECs, 2-6S",
+ "revision": "A",
+ "brief": "A 40 x 40 mm, 6-layer flight controller on the 30.5 mm stack for a 5-inch 6S FPV quad. STM32H743VIT6 (480 MHz) with an 8 MHz crystal; ICM-20602 on SPI1 (Betaflight's gyro) and BMI088 on SPI4 (the second IMU for INAV and ArduPilot), both on their own 3.3 V LDO; MS5611 barometer on I2C1; W25Q128 16 MB blackbox on SPI3. Power from the ESC harness (2-6S, SMAJ30A TVS): LMR51430 BECs for 5 V / 2 A and a switchable 10 V / 2 A for a digital VTX (Betaflight PINIO). JST-SH ports for a 4-in-1 ESC (8-pin: VBAT, GND, CURR, TLM, M1-M4), a DJI O3 / Walksnail / HDZero VTX (6-pin), an ELRS receiver (4-pin) and a GPS + compass (6-pin); USB-C for configuration and DFU; pads for motors 5-8, two spare UARTs, an LED strip and a buzzer. Pin map after the MATEKH743 target.",
+ "blocks": [
+  {
+   "block": "kestrel_h743_core",
+   "as": "mcu",
+   "title": "STM32H743VIT6, 480 MHz",
+   "pinNets": {
+    "U?.1": "PINIO_VTX",
+    "U?.2": "LED0",
+    "U?.3": "LED1",
+    "U?.9": "CS_ICM",
+    "U?.15": "VBAT_ADC",
+    "U?.16": "CURR_ADC",
+    "U?.22": "M3",
+    "U?.23": "M4",
+    "U?.24": "M5",
+    "U?.25": "M6",
+    "U?.29": "SPI1_SCK",
+    "U?.30": "SPI1_MISO",
+    "U?.88": "SPI1_MOSI",
+    "U?.36": "INT_ICM",
+    "U?.34": "M1",
+    "U?.35": "M2",
+    "U?.37": "UART7_RX",
+    "U?.38": "UART7_TX",
+    "U?.39": "INT_BMI_GYR",
+    "U?.40": "CS_BMI_GYR",
+    "U?.41": "CS_BMI_ACC",
+    "U?.42": "SPI4_SCK",
+    "U?.43": "SPI4_MISO",
+    "U?.44": "SPI4_MOSI",
+    "U?.45": "INT_BMI_ACC",
+    "U?.55": "UART3_TX",
+    "U?.56": "UART3_RX",
+    "U?.59": "M7",
+    "U?.60": "M8",
+    "U?.62": "BEEPER",
+    "U?.63": "UART6_TX",
+    "U?.64": "UART6_RX",
+    "U?.67": "LED_STRIP",
+    "U?.68": "UART1_TX",
+    "U?.69": "UART1_RX",
+    "U?.70": "USB_DM",
+    "U?.71": "USB_DP",
+    "U?.77": "CS_FLASH",
+    "U?.78": "SPI3_SCK",
+    "U?.79": "SPI3_MISO",
+    "U?.80": "SPI3_MOSI",
+    "U?.86": "UART2_TX",
+    "U?.87": "UART2_RX",
+    "U?.92": "I2C1_SCL",
+    "U?.93": "I2C1_SDA",
+    "U?.95": "UART4_RX"
+   },
+   "no_connect": [
+    "U?.4",
+    "U?.5",
+    "U?.7",
+    "U?.8",
+    "U?.17",
+    "U?.18",
+    "U?.28",
+    "U?.31",
+    "U?.32",
+    "U?.33",
+    "U?.46",
+    "U?.47",
+    "U?.51",
+    "U?.52",
+    "U?.53",
+    "U?.54",
+    "U?.57",
+    "U?.58",
+    "U?.61",
+    "U?.65",
+    "U?.66",
+    "U?.81",
+    "U?.82",
+    "U?.83",
+    "U?.84",
+    "U?.85",
+    "U?.89",
+    "U?.90",
+    "U?.91",
+    "U?.96",
+    "U?.97",
+    "U?.98"
+   ]
+  },
+  {
+   "block": "kestrel_imu_icm20602",
+   "as": "imu1",
+   "title": "Gyro 1: ICM-20602 on SPI1 (Betaflight)",
+   "nets": {
+    "VDD": "3V3_GYRO",
+    "SCK": "SPI1_SCK",
+    "MOSI": "SPI1_MOSI",
+    "MISO": "SPI1_MISO",
+    "CS": "CS_ICM",
+    "INT": "INT_ICM"
+   }
+  },
+  {
+   "block": "kestrel_imu_bmi088",
+   "as": "imu2",
+   "title": "Gyro 2: BMI088 on SPI4 (INAV / ArduPilot)",
+   "nets": {
+    "VDD": "3V3_GYRO",
+    "SCK": "SPI4_SCK",
+    "MOSI": "SPI4_MOSI",
+    "MISO": "SPI4_MISO",
+    "CS_ACC": "CS_BMI_ACC",
+    "CS_GYR": "CS_BMI_GYR",
+    "INT_ACC": "INT_BMI_ACC",
+    "INT_GYR": "INT_BMI_GYR"
+   }
+  },
+  {
+   "block": "kestrel_baro_ms5611",
+   "as": "baro",
+   "title": "MS5611 on I2C1 (0x77)",
+   "nets": {
+    "VDD": "3V3",
+    "SDA": "I2C1_SDA",
+    "SCL": "I2C1_SCL"
+   }
+  },
+  {
+   "block": "kestrel_flash_w25q128",
+   "as": "flash",
+   "title": "16 MB blackbox on SPI3",
+   "nets": {
+    "VCC": "3V3",
+    "CS": "CS_FLASH",
+    "MISO": "SPI3_MISO",
+    "MOSI": "SPI3_MOSI",
+    "SCK": "SPI3_SCK"
+   }
+  },
+  {
+   "block": "kestrel_vbat_sense",
+   "as": "vbat",
+   "title": "VBAT in, TVS, sense dividers",
+   "nets": {
+    "VBAT": "VBAT",
+    "CURR_IN": "CURR",
+    "VBAT_ADC": "VBAT_ADC",
+    "CURR_ADC": "CURR_ADC"
+   }
+  },
+  {
+   "block": "kestrel_bec_5v",
+   "as": "bec5",
+   "title": "5 V / 2 A BEC",
+   "nets": {
+    "VIN": "VBAT",
+    "VOUT": "5V"
+   }
+  },
+  {
+   "block": "kestrel_bec_10v",
+   "as": "bec10",
+   "title": "10 V / 2 A VTX BEC, switchable",
+   "nets": {
+    "VIN": "VBAT",
+    "VOUT": "10V",
+    "EN": "EN_10V"
+   }
+  },
+  {
+   "block": "merch_lowside_fet",
+   "as": "vtxsw",
+   "title": "VTX power switch (Betaflight PINIO): high = 10 V off",
+   "nets": {
+    "LOAD": "EN_10V",
+    "EN": "PINIO_VTX"
+   }
+  },
+  {
+   "block": "kestrel_ldo_3v3",
+   "as": "ldo",
+   "title": "3V3 for the MCU, flash, baro, LEDs",
+   "nets": {
+    "VIN": "5V",
+    "VOUT": "3V3"
+   }
+  },
+  {
+   "block": "kestrel_ldo_3v3",
+   "as": "ldog",
+   "title": "3V3_GYRO for the two IMUs alone",
+   "nets": {
+    "VIN": "5V",
+    "VOUT": "3V3_GYRO"
+   }
+  },
+  {
+   "block": "kestrel_esc_port",
+   "as": "esc",
+   "title": "ESC 8-pin",
+   "nets": {
+    "VBAT": "VBAT",
+    "CURR": "CURR",
+    "TLM": "UART4_RX",
+    "M1": "M1",
+    "M2": "M2",
+    "M3": "M3",
+    "M4": "M4"
+   }
+  },
+  {
+   "block": "kestrel_vtx_port",
+   "as": "vtx",
+   "title": "Digital VTX 6-pin",
+   "nets": {
+    "PWR": "10V",
+    "TX": "UART3_TX",
+    "RX": "UART3_RX",
+    "SBUS": "UART6_RX"
+   }
+  },
+  {
+   "block": "kestrel_rx_port",
+   "as": "rx",
+   "title": "ELRS receiver 4-pin on UART7",
+   "nets": {
+    "5V": "5V",
+    "RX": "UART7_RX",
+    "TX": "UART7_TX"
+   }
+  },
+  {
+   "block": "kestrel_gps_port",
+   "as": "gps",
+   "title": "GPS + compass 6-pin",
+   "nets": {
+    "5V": "5V",
+    "TX": "UART2_TX",
+    "RX": "UART2_RX",
+    "SDA": "I2C1_SDA",
+    "SCL": "I2C1_SCL"
+   }
+  },
+  {
+   "block": "kestrel_usb_c",
+   "as": "usb",
+   "title": "USB-C: configuration, DFU, power on the bench",
+   "nets": {
+    "USB_DP": "USB_DP",
+    "USB_DM": "USB_DM"
+   }
+  },
+  {
+   "block": "usb_esd_usblc6",
+   "as": "esd",
+   "title": "USB ESD",
+   "nets": {
+    "USB_DP": "USB_DP",
+    "USB_DM": "USB_DM"
+   }
+  },
+  {
+   "block": "kestrel_usb_power",
+   "as": "usbpwr",
+   "title": "VBUS into 5V through a Schottky"
+  },
+  {
+   "block": "merch_lowside_fet",
+   "as": "buz",
+   "title": "Buzzer driver (5 V buzzer on the BZ pads)",
+   "nets": {
+    "LOAD": "BZ_NEG",
+    "EN": "BEEPER"
+   }
+  },
+  {
+   "block": "gpio_led",
+   "as": "led0",
+   "title": "Status LED 0 (blue)",
+   "nets": {
+    "SIG": "LED0"
+   },
+   "values": {
+    "D?": "Blue",
+    "R?": "1k"
+   }
+  },
+  {
+   "block": "gpio_led",
+   "as": "led1",
+   "title": "Status LED 1 (green)",
+   "nets": {
+    "SIG": "LED1"
+   },
+   "values": {
+    "D?": "Green",
+    "R?": "1k"
+   }
+  },
+  {
+   "block": "gpio_led",
+   "as": "ledp",
+   "title": "Power LED (red, on 3V3)",
+   "nets": {
+    "SIG": "3V3"
+   },
+   "values": {
+    "D?": "Red",
+    "R?": "1k"
+   }
+  },
+  {
+   "block": "kestrel_aux_pads",
+   "as": "pads",
+   "title": "Solder pads",
+   "nets": {
+    "M5": "M5",
+    "M6": "M6",
+    "M7": "M7",
+    "M8": "M8",
+    "UART6_TX": "UART6_TX",
+    "UART6_RX": "UART6_RX",
+    "UART1_TX": "UART1_TX",
+    "UART1_RX": "UART1_RX",
+    "LED_STRIP": "LED_STRIP",
+    "LED_PAD": "LED_PAD",
+    "BZ_NEG": "BZ_NEG",
+    "5V": "5V",
+    "10V": "10V"
+   }
+  },
+  {
+   "block": "kestrel_mount_30x30",
+   "as": "mnt",
+   "title": "30.5 mm stack holes"
+  }
+ ],
+ "pwrFlags": [
+  "GND",
+  "VBAT",
+  "5V",
+  "10V",
+  "VBUS"
+ ],
+ "netClasses": [
+  {
+   "name": "VBAT",
+   "nets": [
+    "VBAT"
+   ],
+   "track": 0.4,
+   "clearance": 0.15,
+   "currentA": 1.2,
+   "why": "the two BECs' input: 5 V x 2 A + 10 V x 1 A (a DJI O3) at 90 % is 1.1 A from a 6S pack, 1.6 A from 4S. 0.4 mm of 1 oz outer copper carries 1.23 A at a 10 C rise (IPC-2221), 1.67 A at 20 C. The default via, not a bigger class via: Freerouting's fanout used the default padstack on these nets and KiCad's SES import then gave it the class drill (0.45 / 0.3 mm, a 0.075 mm annular ring), 2026-10-05"
+  },
+  {
+   "name": "BEC",
+   "nets": [
+    "5V",
+    "10V"
+   ],
+   "track": 0.4,
+   "clearance": 0.15,
+   "currentA": 1.2,
+   "why": "5 V feeds the receiver, GPS, LED strip and both LDOs (and is the In3 plane, so its tracks are only pad escapes); 10 V the VTX (about 1 A for a DJI O3)"
+  }
+ ],
+ "board": {
+  "width": 40.0,
+  "height": 40.0,
+  "corner_radius": 3.0,
+  "layers": 6,
+  "origin": [
+   100.0,
+   100.0
+  ],
+  "rules": {
+   "clearance": 0.13,
+   "track": 0.13,
+   "via": [
+    0.45,
+    0.2
+   ],
+   "edge_clearance": 0.4,
+   "hole_to_hole": 0.5,
+   "min_through_hole": 0.2,
+   "min_track": 0.1,
+   "why": "LQFP-100 at 0.5 mm pitch on a 40 mm board; JLC's multilayer line is 0.09 / 0.09 mm, 0.15 mm drill"
+  },
+  "planes": {
+   "In1.Cu": "GND",
+   "In3.Cu": "5V"
+  },
+  "pours": {
+   "In2.Cu": "3V3"
+  },
+  "notes": "6 layers: F signals / In1 GND plane / In2 signals, then 3V3 poured after routing / In3 5V plane / In4 signals, then GND poured / B signals. 5V is a plane because it reaches both LDOs, three ports, the pads and the USB diode across the whole board: as 0.5 mm tracks it was left open in Freerouting's solves (2026-10-05), as was the gyro cluster on 4 layers. The IMUs sit under the MCU at the board's centre, away from the BECs on the left."
+ },
+ "placement": {
+  "mnt:H1?": {
+   "lock": [
+    4.75,
+    4.75
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "30.5 mm stack hole; its courtyard is the grommet's keep-out"
+  },
+  "mnt:H2?": {
+   "lock": [
+    4.75,
+    35.25
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "30.5 mm stack hole; its courtyard is the grommet's keep-out"
+  },
+  "mnt:H3?": {
+   "lock": [
+    35.25,
+    4.75
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "30.5 mm stack hole; its courtyard is the grommet's keep-out"
+  },
+  "mnt:H4?": {
+   "lock": [
+    35.25,
+    35.25
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "30.5 mm stack hole; its courtyard is the grommet's keep-out"
+  },
+  "mcu:U?": {
+   "lock": [
+    20.0,
+    20.0
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "MCU in the middle; its four pin sides face their ports"
+  },
+  "gps:J?": {
+   "lock": [
+    20.0,
+    3.4
+   ],
+   "rot": 180,
+   "from_center": false,
+   "why": "GPS port on the top edge, beside PD5/PD6 and PB6/PB7"
+  },
+  "usb:J?": {
+   "lock": [
+    36.4,
+    14.8
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "USB-C on the right edge, beside PA11/PA12"
+  },
+  "rx:J?": {
+   "lock": [
+    3.4,
+    24.0
+   ],
+   "rot": 270,
+   "from_center": false,
+   "why": "receiver port on the left edge (UART7)"
+  },
+  "esc:J?": {
+   "lock": [
+    20.0,
+    36.6
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "ESC port in the middle of the bottom edge, motors 1-2 above it"
+  },
+  "vtx:J?": {
+   "lock": [
+    36.6,
+    25.6
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "VTX port on the right edge under the USB, beside PD8/PD9"
+  },
+  "mcu:Y?": {
+   "lock": [
+    9.4,
+    17.6
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "8 MHz crystal at PH0/PH1"
+  },
+  "mcu:SW?": {
+   "lock": [
+    9.6,
+    11.0
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "BOOT button"
+  },
+  "esd:U?": {
+   "lock": [
+    29.5,
+    14.8
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "USB ESD behind the receptacle",
+   "side": "bottom"
+  },
+  "imu1:U?": {
+   "lock": [
+    18.4,
+    21.0
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "gyro 1 under the MCU, at the board's centre",
+   "side": "bottom"
+  },
+  "imu2:U?": {
+   "lock": [
+    25.4,
+    19.8
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "gyro 2 beside it, turned so its signal pads face the centre; CS_GYR (pin 5) alone faces right, where the board is open for its via",
+   "side": "bottom"
+  },
+  "imu1:C2?": {
+   "lock": [
+    15.65,
+    22.25
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "ICM-20602 capacitor, clear of its pin-1 mark",
+   "side": "bottom"
+  },
+  "imu2:C1?": {
+   "lock": [
+    30.2,
+    18.5
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "BMI088 VDD capacitor, clear of the pad row's escape vias",
+   "side": "bottom"
+  },
+  "imu2:C2?": {
+   "lock": [
+    30.2,
+    20.7
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "BMI088 VDD capacitor, clear of the pad row's escape vias",
+   "side": "bottom"
+  },
+  "ldog:U?": {
+   "lock": [
+    20.0,
+    15.0
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "the gyros' own LDO",
+   "side": "bottom"
+  },
+  "ldo:U?": {
+   "lock": [
+    25.0,
+    15.0
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "MCU LDO",
+   "side": "bottom"
+  },
+  "bec5:U?": {
+   "lock": [
+    9.0,
+    13.0
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "5 V BEC",
+   "side": "bottom"
+  },
+  "bec5:L?": {
+   "lock": [
+    9.0,
+    19.0
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "5 V inductor",
+   "side": "bottom"
+  },
+  "bec10:U?": {
+   "lock": [
+    9.0,
+    26.0
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "10 V BEC",
+   "side": "bottom"
+  },
+  "bec10:L?": {
+   "lock": [
+    14.0,
+    30.5
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "10 V inductor",
+   "side": "bottom"
+  },
+  "vbat:D?": {
+   "lock": [
+    22.5,
+    33.5
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "TVS by the ESC port",
+   "side": "bottom"
+  },
+  "flash:U?": {
+   "lock": [
+    26.2,
+    9.0
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "blackbox flash under SPI3, clear of the USB-C shell tabs",
+   "side": "bottom"
+  },
+  "baro:U?": {
+   "lock": [
+    14.0,
+    7.8
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "baro under the GPS side: cover it with foam",
+   "side": "bottom"
+  },
+  "usbpwr:D?": {
+   "lock": [
+    30.2,
+    23.2
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "VBUS diode, below the USB-C shell tabs",
+   "side": "bottom"
+  },
+  "vtxsw:Q?": {
+   "lock": [
+    13.4,
+    25.0
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "VTX power switch beside the 10 V BEC's EN",
+   "side": "bottom"
+  },
+  "buz:Q?": {
+   "lock": [
+    18.7,
+    6.0
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "buzzer driver under the BZ pads",
+   "side": "bottom"
+  },
+  "led0:D?": {
+   "lock": [
+    5.2,
+    13.0
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "status LED 0, left edge"
+  },
+  "led1:D?": {
+   "lock": [
+    5.2,
+    15.4
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "status LED 1"
+  },
+  "ledp:D?": {
+   "lock": [
+    5.2,
+    17.8
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "power LED"
+  },
+  "pads:TP1?": {
+   "lock": [
+    2.6,
+    10.6
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "pad M5 on the left edge",
+   "side": "bottom"
+  },
+  "pads:TP2?": {
+   "lock": [
+    2.6,
+    13.25
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "pad M6 on the left edge",
+   "side": "bottom"
+  },
+  "pads:TP3?": {
+   "lock": [
+    2.6,
+    15.9
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "pad M7 on the left edge",
+   "side": "bottom"
+  },
+  "pads:TP4?": {
+   "lock": [
+    2.6,
+    18.55
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "pad M8 on the left edge",
+   "side": "bottom"
+  },
+  "pads:TP5?": {
+   "lock": [
+    2.6,
+    21.2
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "pad T1 on the left edge",
+   "side": "bottom"
+  },
+  "pads:TP6?": {
+   "lock": [
+    2.6,
+    23.85
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "pad R1 on the left edge",
+   "side": "bottom"
+  },
+  "pads:TP7?": {
+   "lock": [
+    2.6,
+    26.5
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "pad T6 on the left edge",
+   "side": "bottom"
+  },
+  "pads:TP8?": {
+   "lock": [
+    2.6,
+    29.15
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "pad R6 on the left edge",
+   "side": "bottom"
+  },
+  "pads:TP9?": {
+   "lock": [
+    12.95,
+    2.6
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "pad LED on the top edge",
+   "side": "bottom"
+  },
+  "pads:TP10?": {
+   "lock": [
+    15.77,
+    2.6
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "pad BZ- on the top edge",
+   "side": "bottom"
+  },
+  "pads:TP11?": {
+   "lock": [
+    18.59,
+    2.6
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "pad BZ+ on the top edge",
+   "side": "bottom"
+  },
+  "pads:TP12?": {
+   "lock": [
+    21.41,
+    2.6
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "pad 5V on the top edge",
+   "side": "bottom"
+  },
+  "pads:TP13?": {
+   "lock": [
+    24.23,
+    2.6
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "pad 10V on the top edge",
+   "side": "bottom"
+  },
+  "pads:TP14?": {
+   "lock": [
+    27.05,
+    2.6
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "pad GND on the top edge",
+   "side": "bottom"
+  },
+  "mcu:TP1?": {
+   "lock": [
+    25.0,
+    38.4
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "SWD pad SWDIO",
+   "side": "bottom"
+  },
+  "mcu:TP2?": {
+   "lock": [
+    27.0,
+    38.4
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "SWD pad SWCLK",
+   "side": "bottom"
+  },
+  "mcu:TP3?": {
+   "lock": [
+    29.0,
+    38.4
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "SWD pad NRST",
+   "side": "bottom"
+  },
+  "mcu:C1?": {
+   "lock": [
+    10.075,
+    14.75
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of mcu:U?, placed by the kit"
+  },
+  "mcu:C2?": {
+   "lock": [
+    10.075,
+    13.5
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of mcu:U?, placed by the kit"
+  },
+  "mcu:C3?": {
+   "lock": [
+    8.325,
+    14.25
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of mcu:U?, placed by the kit"
+  },
+  "mcu:C4?": {
+   "lock": [
+    10.075,
+    20.5
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of mcu:U?, placed by the kit"
+  },
+  "mcu:C5?": {
+   "lock": [
+    10.075,
+    21.75
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of mcu:U?, placed by the kit"
+  },
+  "mcu:C6?": {
+   "lock": [
+    13.825,
+    10.25
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of mcu:U?, placed by the kit"
+  },
+  "mcu:C7?": {
+   "lock": [
+    25.0,
+    29.425
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of mcu:U?, placed by the kit"
+  },
+  "mcu:C8?": {
+   "lock": [
+    29.425,
+    15.0
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of mcu:U?, placed by the kit"
+  },
+  "mcu:C9?": {
+   "lock": [
+    7.825,
+    20.5
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of mcu:U?, placed by the kit"
+  },
+  "mcu:C10?": {
+   "lock": [
+    6.325,
+    19.25
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of mcu:U?, placed by the kit"
+  },
+  "mcu:C11?": {
+   "lock": [
+    10.075,
+    23.0
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of mcu:U?, placed by the kit"
+  },
+  "mcu:C12?": {
+   "lock": [
+    8.075,
+    22.75
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of mcu:U?, placed by the kit"
+  },
+  "mcu:C13?": {
+   "lock": [
+    10.325,
+    25.25
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of mcu:U?, placed by the kit"
+  },
+  "mcu:R?": {
+   "lock": [
+    17.0,
+    10.575
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of mcu:U?, placed by the kit"
+  },
+  "imu1:C1?": {
+   "lock": [
+    17.9,
+    23.475
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of imu1:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "imu1:C3?": {
+   "lock": [
+    20.15,
+    23.475
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of imu1:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "imu1:R?": {
+   "lock": [
+    15.925,
+    20.0
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of imu1:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "imu2:R1?": {
+   "lock": [
+    22.887,
+    21.3
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of imu2:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "imu2:R2?": {
+   "lock": [
+    21.637,
+    20.79
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of imu2:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "baro:C?": {
+   "lock": [
+    15.875,
+    10.375
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of baro:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "baro:R1?": {
+   "lock": [
+    14.625,
+    5.225
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of baro:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "baro:R2?": {
+   "lock": [
+    17.875,
+    8.475
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of baro:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "flash:C?": {
+   "lock": [
+    29.788,
+    5.405
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of flash:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "flash:R1?": {
+   "lock": [
+    20.863,
+    10.905
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of flash:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "flash:R2?": {
+   "lock": [
+    20.363,
+    8.365
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of flash:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "flash:R3?": {
+   "lock": [
+    26.538,
+    12.635
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of flash:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "vbat:C1?": {
+   "lock": [
+    20.5,
+    30.5
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of vbat:D?, placed by the kit",
+   "side": "bottom"
+  },
+  "vbat:R1?": {
+   "lock": [
+    18.25,
+    33.5
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of vbat:D?, placed by the kit",
+   "side": "bottom"
+  },
+  "vbat:R2?": {
+   "lock": [
+    18.0,
+    31.24
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of vbat:D?, placed by the kit",
+   "side": "bottom"
+  },
+  "vbat:C2?": {
+   "lock": [
+    17.0,
+    34.49
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of vbat:D?, placed by the kit",
+   "side": "bottom"
+  },
+  "vbat:R3?": {
+   "lock": [
+    22.5,
+    36.0
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of vbat:D?, placed by the kit",
+   "side": "bottom"
+  },
+  "vbat:C3?": {
+   "lock": [
+    22.76,
+    37.25
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of vbat:D?, placed by the kit",
+   "side": "bottom"
+  },
+  "bec5:C1?": {
+   "lock": [
+    5.612,
+    12.05
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of bec5:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "bec5:C2?": {
+   "lock": [
+    7.862,
+    10.55
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of bec5:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "bec5:C3?": {
+   "lock": [
+    10.137,
+    15.45
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of bec5:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "bec5:R1?": {
+   "lock": [
+    12.137,
+    12.05
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of bec5:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "bec5:R2?": {
+   "lock": [
+    10.137,
+    9.55
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of bec5:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "bec5:C4?": {
+   "lock": [
+    13.1,
+    19.0
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of bec5:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "bec5:C5?": {
+   "lock": [
+    9.6,
+    23.0
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of bec5:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "bec5:R3?": {
+   "lock": [
+    12.887,
+    14.5
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of bec5:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "bec10:C1?": {
+   "lock": [
+    5.612,
+    25.05
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of bec10:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "bec10:C2?": {
+   "lock": [
+    6.612,
+    22.55
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of bec10:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "bec10:C3?": {
+   "lock": [
+    9.887,
+    28.45
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of bec10:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "bec10:R1?": {
+   "lock": [
+    7.137,
+    28.8
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of bec10:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "bec10:R2?": {
+   "lock": [
+    10.137,
+    30.8
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of bec10:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "bec10:C4?": {
+   "lock": [
+    18.1,
+    27.5
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of bec10:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "bec10:C5?": {
+   "lock": [
+    14.6,
+    34.5
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of bec10:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "bec10:C6?": {
+   "lock": [
+    20.35,
+    27.5
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of bec10:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "bec10:R3?": {
+   "lock": [
+    16.137,
+    26.0
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of bec10:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "vtxsw:R?": {
+   "lock": [
+    22.35,
+    25.938
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of vtxsw:Q?, placed by the kit",
+   "side": "bottom"
+  },
+  "ldo:C1?": {
+   "lock": [
+    22.363,
+    17.45
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of ldo:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "ldo:C2?": {
+   "lock": [
+    28.137,
+    17.95
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of ldo:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "ldo:R?": {
+   "lock": [
+    20.363,
+    12.55
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of ldo:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "ldog:C1?": {
+   "lock": [
+    18.863,
+    17.45
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of ldog:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "ldog:C2?": {
+   "lock": [
+    20.637,
+    17.95
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of ldog:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "ldog:R?": {
+   "lock": [
+    18.113,
+    12.55
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of ldog:U?, placed by the kit",
+   "side": "bottom"
+  },
+  "usb:R1?": {
+   "lock": [
+    30.655,
+    16.05
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of usb:J?, placed by the kit"
+  },
+  "usb:R2?": {
+   "lock": [
+    30.655,
+    13.05
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of usb:J?, placed by the kit"
+  },
+  "usb:C?": {
+   "lock": [
+    30.155,
+    18.95
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of usb:J?, placed by the kit"
+  },
+  "buz:R?": {
+   "lock": [
+    18.512,
+    9.95
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of buz:Q?, placed by the kit",
+   "side": "bottom"
+  },
+  "led0:R?": {
+   "lock": [
+    5.487,
+    11.25
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of led0:D?, placed by the kit"
+  },
+  "led1:R?": {
+   "lock": [
+    2.737,
+    15.4
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of led1:D?, placed by the kit"
+  },
+  "ledp:R?": {
+   "lock": [
+    1.987,
+    17.8
+   ],
+   "rot": 0,
+   "from_center": false,
+   "why": "satellite of ledp:D?, placed by the kit"
+  },
+  "pads:R?": {
+   "lock": [
+    10.95,
+    2.6
+   ],
+   "rot": 90,
+   "from_center": false,
+   "why": "satellite of pads:TP1?, placed by the kit",
+   "side": "bottom"
+  }
+ },
+ "route": {
+  "passes": 40,
+  "fanout": true,
+  "solve_s": 600
+ },
+ "stitch_pitch": 4.0,
+ "silk": {
+  "words": {
+   "pads:TP1?": "M5",
+   "pads:TP2?": "M6",
+   "pads:TP3?": "M7",
+   "pads:TP4?": "M8",
+   "pads:TP5?": "T1",
+   "pads:TP6?": "R1",
+   "pads:TP7?": "T6",
+   "pads:TP8?": "R6",
+   "pads:TP9?": "LED",
+   "pads:TP10?": "BZ-",
+   "pads:TP11?": "BZ+",
+   "pads:TP12?": "5V",
+   "pads:TP13?": "10V",
+   "pads:TP14?": "GND",
+   "mcu:TP1?": "DIO",
+   "mcu:TP2?": "CLK",
+   "mcu:TP3?": "RST",
+   "mcu:SW?": "BOOT",
+   "esc:J?": "ESC",
+   "vtx:J?": "VTX",
+   "rx:J?": "RX",
+   "gps:J?": "GPS",
+   "usb:J?": "USB"
+  },
+  "title": [
+   {
+    "text": "KESTREL H7",
+    "y": 33.0,
+    "size": 1.2,
+    "bold": true
+   },
+   {
+    "text": "rev {revision}  heypcb.ai",
+    "y": 34.6,
+    "size": 0.8
+   }
+  ]
+ },
+ "captions": {
+  "done_3d": "Kestrel H7: STM32H743 flight controller, 40 x 40 mm, 30.5 mm stack."
+ }
+}
